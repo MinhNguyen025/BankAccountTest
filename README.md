@@ -135,5 +135,6 @@ This project is licensed under the MIT License. See the LICENSE file for details
 For any questions or feedback, please reach out to Minh Nguyen via the [GitHub repository](https://github.com/MinhNguyen025/BankAccountTest).
 
 ## ChatGPT share: [Source](https://chatgpt.com/c/677cdbdb-8b14-8000-b039-9fcc050a3d95)
-## ChatGPT mark: 10/10 [Source](https://chatgpt.com/c/677df1e9-1f54-8010-8ccd-06ad02f70693?model=o1-mini)(https://chatgpt.com/c/677df0d4-d398-8010-91ae-fb3e002074a9)
+## ChatGPT mark: 10/10 [Source](https://chatgpt.com/c/677df1e9-1f54-8010-8ccd-06ad02f70693?model=o1-mini)
+## ChatGPT mark: ver2 [Source](https://chatgpt.com/c/677df0d4-d398-8010-91ae-fb3e002074a9)
 
