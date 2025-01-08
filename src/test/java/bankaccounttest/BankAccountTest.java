@@ -24,7 +24,7 @@ public class BankAccountTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             account.deposit(-20.0);
         });
-        assertEquals("Số tiền gửi phải lớn hơn 0.", exception.getMessage());
+        assertEquals("Deposit amount must be greater than 0.", exception.getMessage());
     }
 
     @Test
@@ -40,7 +40,7 @@ public class BankAccountTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             account.withdraw(-30.0);
         });
-        assertEquals("Số tiền rút phải lớn hơn 0.", exception.getMessage());
+        assertEquals("Withdrawal amount must be greater than 0.", exception.getMessage());
     }
 
     @Test
@@ -49,7 +49,7 @@ public class BankAccountTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             account.withdraw(150.0);
         });
-        assertEquals("Số tiền rút vượt quá số dư hiện tại.", exception.getMessage());
+        assertEquals("Withdrawal amount exceeds the current balance.", exception.getMessage());
     }
 
     @Test
@@ -62,37 +62,54 @@ public class BankAccountTest {
         assertEquals(200.0, account.getBalance(), 0.001);
     }
 
-    // Trường hợp đặc biệt: Gửi tiền bằng 0
+    // Edge case: Deposit amount is 0
     @Test
     public void testDepositZeroAmount() {
         BankAccount account = new BankAccount(100.0);
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             account.deposit(0);
         });
-        assertEquals("Số tiền gửi phải lớn hơn 0.", exception.getMessage());
+        assertEquals("Deposit amount must be greater than 0.", exception.getMessage());
     }
 
-    // Trường hợp đặc biệt: Rút tiền bằng 0
+    // Edge case: Withdraw amount is 0
     @Test
     public void testWithdrawZeroAmount() {
         BankAccount account = new BankAccount(100.0);
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             account.withdraw(0);
         });
-        assertEquals("Số tiền rút phải lớn hơn 0.", exception.getMessage());
+        assertEquals("Withdrawal amount must be greater than 0.", exception.getMessage());
     }
 
-    // Trường hợp đặc biệt: Rút hết số dư rồi gửi và rút tiếp
+    // Edge case: Withdraw all balance, then deposit and withdraw again
     @Test
     public void testWithdrawAndDepositAfterEmptyBalance() {
         BankAccount account = new BankAccount(100.0);
-        account.withdraw(100.0);  // Số dư về 0
+        account.withdraw(100.0);  // Balance becomes 0
         assertEquals(0.0, account.getBalance(), 0.001);
 
-        account.deposit(50.0);   // Gửi thêm 50
+        account.deposit(50.0);   // Deposit 50
         assertEquals(50.0, account.getBalance(), 0.001);
 
-        account.withdraw(25.0);  // Rút 25
+        account.withdraw(25.0);  // Withdraw 25
         assertEquals(25.0, account.getBalance(), 0.001);
+    }
+
+    @Test
+    public void testDepositLargeAmount() {
+        BankAccount account = new BankAccount(100.0);
+        account.deposit(Double.MAX_VALUE - 100.0);
+        assertEquals(Double.MAX_VALUE, account.getBalance(), 0.001);
+    }
+    
+    @Test
+    public void testWithdrawAllBalanceMultipleTimes() {
+        BankAccount account = new BankAccount(500.0);
+        for (int i = 0; i < 10; i++) {
+            account.withdraw(50.0); // Withdraw 50 multiple times
+            account.deposit(50.0);  // Deposit 50 back
+        }
+        assertEquals(500.0, account.getBalance(), 0.001);
     }
 }
