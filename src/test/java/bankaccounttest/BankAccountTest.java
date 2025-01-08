@@ -61,4 +61,38 @@ public class BankAccountTest {
         account.withdraw(75.0);    // 275 - 75 = 200
         assertEquals(200.0, account.getBalance(), 0.001);
     }
+
+    // Trường hợp đặc biệt: Gửi tiền bằng 0
+    @Test
+    public void testDepositZeroAmount() {
+        BankAccount account = new BankAccount(100.0);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            account.deposit(0);
+        });
+        assertEquals("Số tiền gửi phải lớn hơn 0.", exception.getMessage());
+    }
+
+    // Trường hợp đặc biệt: Rút tiền bằng 0
+    @Test
+    public void testWithdrawZeroAmount() {
+        BankAccount account = new BankAccount(100.0);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            account.withdraw(0);
+        });
+        assertEquals("Số tiền rút phải lớn hơn 0.", exception.getMessage());
+    }
+
+    // Trường hợp đặc biệt: Rút hết số dư rồi gửi và rút tiếp
+    @Test
+    public void testWithdrawAndDepositAfterEmptyBalance() {
+        BankAccount account = new BankAccount(100.0);
+        account.withdraw(100.0);  // Số dư về 0
+        assertEquals(0.0, account.getBalance(), 0.001);
+
+        account.deposit(50.0);   // Gửi thêm 50
+        assertEquals(50.0, account.getBalance(), 0.001);
+
+        account.withdraw(25.0);  // Rút 25
+        assertEquals(25.0, account.getBalance(), 0.001);
+    }
 }
