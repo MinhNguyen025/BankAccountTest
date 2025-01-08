@@ -25,7 +25,7 @@ public class BankAccount {
      * @param amount The amount to deposit (must be greater than 0).
      * @throws IllegalArgumentException if the deposit amount is invalid.
      */
-    public void deposit(double amount) {
+    public synchronized void deposit(double amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Deposit amount must be greater than 0.");
         }
@@ -38,7 +38,7 @@ public class BankAccount {
      * @param amount The amount to withdraw (must be greater than 0 and not exceed the balance).
      * @throws IllegalArgumentException if the withdrawal amount is invalid.
      */
-    public void withdraw(double amount) {
+    public synchronized void withdraw(double amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Withdrawal amount must be greater than 0.");
         }
